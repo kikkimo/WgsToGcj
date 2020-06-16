@@ -1,10 +1,30 @@
-﻿This class WGStoGCJ implements geodetic coordinate transform between geodetic coordinate in WGS84 coordinate system and geodetic coordinate in GCJ-02 coordinate system.
+﻿This class WGStoGCJ implements geodetic coordinate transform between geodetic coordinate in WGS84 coordinate system and geodetic coordinate in GCJ-02 coordinate system with high precision.
 
 <font color = "#2A80ff">Supports 4 ways to convert coordinates form GCJ-02 coordinate system to WGS84 coordinate system:</font>
 - Simple linear iteration
 - Analytical derivation
 - Numerical derivation
 - Automatic derivation(needed Ceres library)
+
+WGS84 to GCJ-02:
+$$\eqalign{
+  & \Delta lo{n_0} = lo{n_{WGS84}} - 105  \cr 
+  & \Delta la{t_0} = la{t_{WGS84}} - 35  \cr 
+  & \Delta lo{n_1} = 300 + \Delta lo{n_0} + 2\Delta la{t_0} + 0.1\Delta lo{n_0}^2 + 0.1\Delta lo{n_0} \cdot \Delta la{t_0} + 0.1\sqrt {\left| {\Delta lo{n_0}} \right|}   \cr 
+  &  + \frac{2}{3}\left( {20\sin \left( {6\pi  \cdot \Delta lo{n_0}} \right) + 20\sin \left( {2\pi  \cdot \Delta lo{n_0}} \right)} \right)  \cr 
+  &  + \frac{2}{3}\left( {20\sin \left( {\pi  \cdot \Delta lo{n_0}} \right) + 40\sin \left( {\frac{{\pi  \cdot \Delta lo{n_0}}}{3}} \right)} \right)  \cr 
+  &  + \frac{2}{3}\left( {150\sin \left( {\frac{{\pi  \cdot \Delta lo{n_0}}}{{12}}} \right) + 300\sin \left( {\frac{{\pi  \cdot \Delta lo{n_0}}}{{30}}} \right)} \right)  \cr 
+  & \Delta la{t_1} =  - 100 + 2\Delta lo{n_0} + 3\Delta la{t_0} + 0.2\Delta la{t_0}^2 + 0.1\Delta lo{n_0} \cdot \Delta la{t_0} + 0.2\sqrt {\left| {\Delta lo{n_0}} \right|}   \cr 
+  &  + \frac{2}{3}\left( {20\sin \left( {6\pi  \cdot \Delta lo{n_0}} \right) + 20\sin \left( {2\pi  \cdot \Delta lo{n_0}} \right)} \right)  \cr 
+  &  + \frac{2}{3}\left( {20\sin \left( {\pi  \cdot \Delta la{t_0}} \right) + 40\sin \left( {\frac{{\pi  \cdot \Delta la{t_0}}}{3}} \right)} \right)  \cr 
+  &  + \frac{2}{3}\left( {160\sin \left( {\frac{{\pi  \cdot \Delta la{t_0}}}{{12}}} \right) + 320\sin \left( {\frac{{\pi  \cdot \Delta la{t_0}}}{{30}}} \right)} \right)  \cr 
+  & {B_{WGS84}} = Deg2Rad(la{t_{WGS84}})  \cr 
+  & W = \sqrt {1 - {e^2}\sin {{\left( {{B_{WGS84}}} \right)}^2}}   \cr 
+  & N = \frac{a}{W}  \cr 
+  & \Delta lo{n_2} = \frac{{180\Delta lo{n_1}}}{{\pi N \cdot \cos \left( {{B_{WGS84}}} \right)}}  \cr 
+  & \Delta la{t_2} = \frac{{180\Delta la{t_1} \cdot {W^2}}}{{\pi N \cdot \left( {1 - {e^2}} \right)}}  \cr 
+  & lo{n_{GCJ - 02}} = lo{n_{WGS84}} + \Delta lo{n_2}  \cr 
+  & la{t_{GCJ - 02}} = la{t_{WGS84}} + \Delta la{t_2} \cr} $$
 
 **Notice:**
 1. Use C++ standard 17.

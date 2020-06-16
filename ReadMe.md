@@ -1,4 +1,4 @@
-﻿This class WGStoGCJ implements geodetic coordinate transform between geodetic coordinate in WGS84 coordinate system and geodetic coordinate in GCJ-02 coordinate system.
+﻿This class WGStoGCJ implements geodetic coordinate transform between geodetic coordinate in WGS84 coordinate system and geodetic coordinate in GCJ-02 coordinate system with high precision.
 
 <font color = "#2A80ff">Supports 4 ways to convert coordinates form GCJ-02 coordinate system to WGS84 coordinate system:</font>
 - Simple linear iteration
